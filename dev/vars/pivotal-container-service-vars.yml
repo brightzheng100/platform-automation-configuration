@@ -1,0 +1,60 @@
+---
+
+# vars file for product: OpsMan
+
+# Notes:
+# 1. This is the sample product config vars file for Ops Manager on top of Google Cloud Platform (GCP)
+# 2. This should work together with "/products/ops-manager.yml" to parameterize the product config
+# 3. The values of the YAML elements can be: a) simple static values, or 2) values stored in CredHub
+
+pks:
+
+  # product-properties
+  product-properties:
+    pks_tls: ((pks/product-properties/pks_tls))
+    properties:
+      cloud_provider: 
+        type: GCP
+        gcp:
+          project_id: "((pks/product-properties/project_id))"
+          network: pcf-gcp-management-subnet
+          master_service_account: "((pks/product-properties/master_service_account))"
+          worker_service_account: "((pks/product-properties/worker_service_account))"
+      pks_api_hostname: "((pks/product-properties/pks_api_hostname))"
+      plan1_selector:
+        status: "Plan Active"
+        active:
+          master_az_placement: ["us-central1-a", "us-central1-b", "us-central1-c"]
+          worker_az_placement: ["us-central1-a", "us-central1-b", "us-central1-c"]
+      plan2_selector:
+        status: "Plan Inactive"
+      plan3_selector:
+        status: "Plan Inactive"
+      vm_extensions: ["public_ip"]
+      wavefront: disabled
+  
+  # network-properties
+  network-properties:
+    network: pcf-gcp-management-subnet
+    other_availability_zones:
+    - name: us-central1-a
+    - name: us-central1-b
+    - name: us-central1-c
+    service_network:
+      name: pks-services
+    singleton_availability_zone:
+      name: us-central1-a
+
+  # resource-config
+  resource-config:
+    pivotal-container-service:
+      elb_names:
+      - tcp:pcf-gcp-pks-api
+
+  # errand-config
+  errand-config:
+    delete-all-clusters: true
+    pks-nsx-t-precheck: false
+    upgrade-all-service-instances: true
+    wavefront-alert-creation: false
+    wavefront-alert-deletion: false

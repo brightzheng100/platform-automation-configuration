@@ -1,0 +1,41 @@
+---
+
+# Product: credhub-service-broker
+
+# Notes:
+# 1. This is the sample product config file for CredHub Service Broker
+
+product-name: credhub-service-broker
+product-properties:
+  .properties.allow_paid_service_plans:
+    value: false
+  .properties.apply_open_security_group:
+    value: false
+  .properties.credhub_broker_enable_global_access_to_plans:
+    value: true
+  .properties.org:
+    value: credhub-service-broker-org
+  .properties.space:
+    value: credhub-service-broker-space
+network-properties:
+  network:
+    name: ((credhub-service-broker.network-properties.network))
+  other_availability_zones: ((credhub-service-broker.network-properties.other_availability_zones))
+  singleton_availability_zone: ((credhub-service-broker.network-properties.singleton_availability_zone))
+resource-config:
+  delete-all:
+    instances: automatic
+    instance_type:
+      id: automatic
+    internet_connected: true
+  deploy-all:
+    instances: automatic
+    instance_type:
+      id: automatic
+    internet_connected: true
+errand-config:
+  delete-all:
+    pre-delete-state: true
+  deploy-all:
+    post-deploy-state: true
+

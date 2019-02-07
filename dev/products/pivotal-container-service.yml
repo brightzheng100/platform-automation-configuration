@@ -1,0 +1,87 @@
+---
+
+# Product: pivotal-container-service
+
+# Notes:
+# 1. This is the sample product config file for Pivotal Container Service (PKS)
+# 2. The variables may vary for different IaaSes and configuration preference
+# 3. It's recommended to establish the config baseline by generating the staged config and parameterizing it for futher upgrade/patch
+
+product-name: pivotal-container-service
+product-properties:
+  .pivotal-container-service.pks_tls:
+    value:
+      cert_pem: "((pks.product-properties.pks_tls.certificate))"
+      private_key_pem: "((pks.product-properties.pks_tls.private_key))"
+  .properties.cloud_provider:
+    value: "((pks.product-properties.properties.cloud_provider.type))"
+  .properties.cloud_provider.gcp.project_id:
+    value: "((pks.product-properties.properties.cloud_provider.gcp.project_id))"
+  .properties.cloud_provider.gcp.network:
+    value: "((pks.product-properties.properties.cloud_provider.gcp.network))"
+  .properties.cloud_provider.gcp.master_service_account:
+    value: "((pks.product-properties.properties.cloud_provider.gcp.master_service_account))"
+  .properties.cloud_provider.gcp.worker_service_account:
+    value: "((pks.product-properties.properties.cloud_provider.gcp.worker_service_account))"
+  .properties.network_selector:
+    value: flannel
+  .properties.pks-vrli:
+    value: disabled
+  .properties.pks_api_hostname:
+    value: "((pks.product-properties.properties.pks_api_hostname))"
+  .properties.plan1_selector:
+    value: "((pks.product-properties.properties.plan1_selector.status))"
+  .properties.plan1_selector.active.master_az_placement:
+    value: "((pks.product-properties.properties.plan1_selector.active.master_az_placement))"
+  .properties.plan1_selector.active.worker_az_placement:
+    value: "((pks.product-properties.properties.plan1_selector.active.worker_az_placement))"
+  .properties.plan2_selector:
+    value: "((pks.product-properties.properties.plan2_selector.status))"
+  .properties.plan3_selector:
+    value: "((pks.product-properties.properties.plan3_selector.status))"
+  .properties.proxy_selector:
+    value: Disabled
+  .properties.sink_resources:
+    value: true
+  .properties.syslog_selector:
+    value: disabled
+  .properties.telemetry_selector:
+    value: disabled
+  .properties.uaa:
+    value: internal
+  .properties.uaa_pks_cli_access_token_lifetime:
+    value: 86400
+  .properties.uaa_pks_cli_refresh_token_lifetime:
+    value: 172800
+  .properties.vm_extensions:
+    value: "((pks.product-properties.properties.vm_extensions))"
+  .properties.wavefront:
+    value: "((pks.product-properties.properties.wavefront))"
+  .properties.worker_max_in_flight:
+    value: 1
+network-properties:
+  network:
+    name: ((pks.network-properties.network))
+  other_availability_zones: ((pks.network-properties.other_availability_zones))
+  service_network: ((pks.network-properties.service_network))
+  singleton_availability_zone: ((pks.network-properties.singleton_availability_zone))
+resource-config:
+  pivotal-container-service:
+    instances: automatic
+    persistent_disk:
+      size_mb: automatic
+    instance_type:
+      id: automatic
+    internet_connected: true
+    elb_names: ((pks.resource-config.pivotal-container-service.elb_names))
+errand-config:
+  delete-all-clusters:
+    pre-delete-state: ((pks.errand-config.delete-all-clusters))
+  pks-nsx-t-precheck:
+    post-deploy-state: ((pks.errand-config.pks-nsx-t-precheck))
+  upgrade-all-service-instances:
+    post-deploy-state: ((pks.errand-config.upgrade-all-service-instances))
+  wavefront-alert-creation:
+    post-deploy-state: ((pks.errand-config.wavefront-alert-creation))
+  wavefront-alert-deletion:
+    pre-delete-state: ((pks.errand-config.wavefront-alert-deletion))

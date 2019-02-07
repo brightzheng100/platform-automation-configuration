@@ -1,0 +1,24 @@
+---
+
+# vars file for product: OpsMan
+
+# Notes:
+# 1. This is the sample product config vars file for Ops Manager on top of Google Cloud Platform (GCP)
+# 2. This should work together with "/products/ops-manager.yml" to parameterize the product config
+# 3. The values of the YAML elements can be: a) simple static values, or 2) values stored in CredHub
+
+gcp:
+  gcp_service_account: ((gcp_service_account))
+  project: fe-xzheng
+  region: us-central1
+  zone: us-central1-a
+  vm_name: ops-manager-vm               # default: OpsManager-vm
+  # For SharedVPC: projects/[HOST_PROJECT_ID]/regions/[REGION]/subnetworks/[SUBNET]
+  vpc_subnet: pcf-gcp-management-subnet
+  tags: ops-manager                     # make sure firewall allow 443/22 for network tag of "ops-manager"
+  custom_cpu: 4                         # default:  8
+  custom_memory: 16                     # default: 16
+  boot_disk_size: 100                   # default: 400
+  # At least one IP address (public or private) needs to be assigned to the VM.
+  public_ip: ((opsman_public_ip))
+  private_ip: 10.0.2.3
