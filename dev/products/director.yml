@@ -1,42 +1,48 @@
 ---
 
-# Product: OpsMan BOSH Director
-
+# Product: BOSH Director
 # Notes:
 # 1. This is the sample product config file for OpsMan BOSH Director, on GCP
 # 2. The variables may vary for different IaaSes and configuration preference
 # 3. It's recommended to establish the config baseline by generating the staged config and parameterizing it for futher upgrade/patch
+# 4. Do note that there was a breaking change from v2.0.0-beta.1 for director.yml
 
 az-configuration: ((director.az_configuration))
-director-configuration:
-  blobstore_type: ((director.director-configuration.blobstore_type))
-  bosh_recreate_on_next_deploy: false
-  database_type: ((director.director-configuration.database_type))
-  director_worker_count: 5
-  disable_dns_release: false
-  encryption:
-    keys: []
-    providers: []
-  hm_emailer_options:
-    enabled: false
-  hm_pager_duty_options:
-    enabled: false
-  keep_unreachable_vms: false
-  ntp_servers_string: ((director.director-configuration.ntp_servers_string))
-  post_deploy_enabled: true
-  resurrector_enabled: true
-  retry_bosh_deploys: false
-iaas-configuration:
-  associated_service_account: ((director.iaas-configuration.associated_service_account))
-  auth_json: ((director.iaas-configuration.auth_json))
-  project: ((director.iaas-configuration.project))
-network-assignment:
+network-assignment: 
   network: ((director.network-assignment.network))
   other_availability_zones: []
   singleton_availability_zone: ((director.network-assignment.singleton_availability_zone))
-networks-configuration:
+networks-configuration: 
   icmp_checks_enabled: false
   networks: ((director.networks-configuration.networks))
+properties-configuration:
+  director_configuration:
+    blobstore_type: ((director.director-configuration.blobstore_type))
+    bosh_recreate_on_next_deploy: false
+    database_type: ((director.director-configuration.database_type))
+    director_worker_count: 5
+    disable_dns_release: false
+    encryption:
+      keys: []
+      providers: []
+    hm_emailer_options:
+      enabled: false
+    hm_pager_duty_options:
+      enabled: false
+    keep_unreachable_vms: false
+    ntp_servers_string: ((director.director-configuration.ntp_servers_string))
+    post_deploy_enabled: true
+    resurrector_enabled: true
+    retry_bosh_deploys: false
+  security_configuration:
+    generate_vm_passwords: ((director.security-configuration.generate_vm_passwords))
+  syslog_configuration:
+    enabled: false
+  iaas_configuration:
+    associated_service_account: ((director.iaas-configuration.associated_service_account))
+    auth_json: ((director.iaas-configuration.auth_json))
+    project: ((director.iaas-configuration.project))
+  dns_configuration: {}
 resource-configuration:
   compilation:
     instances: automatic
@@ -50,9 +56,4 @@ resource-configuration:
     instance_type:
       id: automatic
     internet_connected: true
-security-configuration:
-  generate_vm_passwords: ((director.security-configuration.generate_vm_passwords))
-syslog-configuration:
-  enabled: false
 vmextensions-configuration: []
-
