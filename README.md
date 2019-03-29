@@ -2,19 +2,50 @@
 
 ### Overview
 
+Below is just as a sample folder structure which has 2 fundations, namely `dev` and `pez`.
+
 ```
 .
 ├── README.md
-└── <FOUNDATION-CODE>
+├── dev
+│   ├── config
+│   │   ├── auth-ldap.yml
+│   │   ├── auth-saml.yml
+│   │   └── auth.yml
+│   ├── env
+│   │   └── env.yml
+│   ├── generated-config
+│   ├── products
+│   │   ├── cf.yml
+│   │   ├── credhub-service-broker.yml
+│   │   ├── director-1.x.yml
+│   │   ├── director.yml
+│   │   ├── ops-manager.yml
+│   │   └── pivotal-container-service.yml
+│   ├── state
+│   │   └── state.yml
+│   └── vars
+│       ├── cf-vars.yml
+│       ├── credhub-service-broker-vars.yml
+│       ├── director-vars.yml
+│       ├── ops-manager-vars.yml
+│       └── pivotal-container-service-vars.yml
+└── pez
     ├── config
     │   └── auth.yml
     ├── env
     │   └── env.yml
     ├── generated-config
     ├── products
+    │   ├── director.yml
+    │   ├── ops-manager.yml
+    │   └── pivotal-container-service.yml
     ├── state
     │   └── state.yml
     └── vars
+        ├── director-vars.yml
+        ├── ops-manager-vars.yml
+        └── pivotal-container-service-vars.yml
 ```
 
 ### Detailed Description

@@ -1,0 +1,106 @@
+---
+
+# Product: pivotal-container-service
+
+# Notes:
+# 1. This is the sample product config file for Pivotal Container Service (PKS), with NSX-T, on vSphere IaaS
+# 2. The variables may vary for different IaaSes and configuration preference
+# 3. It's recommended to establish the config baseline by generating the staged config and parameterizing it for futher upgrade/patch
+
+product-name: pivotal-container-service
+product-properties:
+  .pivotal-container-service.pks_tls:
+    value:
+      cert_pem: ((pks.product-properties.pks_tls.certificate))
+      private_key_pem: ((pks.product-properties.pks_tls.private_key))
+  .properties.cloud_provider:
+    value: ((pks.product-properties.properties.cloud_provider.type))
+  .properties.network_selector:
+    value: ((pks.product-properties.properties.network_selector.type))
+  .properties.network_selector.nsx.cloud-config-dns:
+    value: ((pks.product-properties.properties.network_selector.nsx.cloud-config-dns))
+  .properties.network_selector.nsx.floating-ip-pool-ids:
+    value: ((pks.product-properties.properties.network_selector.nsx.floating-ip-pool-ids))
+  .properties.network_selector.nsx.ip-block-id:
+    value: ((pks.product-properties.properties.network_selector.nsx.ip-block-id))
+  .properties.network_selector.nsx.nodes-ip-block-id:
+    value: ((pks.product-properties.properties.network_selector.nsx.nodes-ip-block-id))
+  .properties.network_selector.nsx.lb_size_large_supported:
+    value: true
+  .properties.network_selector.nsx.lb_size_medium_supported:
+    value: true
+  .properties.network_selector.nsx.nat_mode:
+    value: ((pks.product-properties.properties.network_selector.nsx.nat_mode))
+  .properties.network_selector.nsx.network_automation:
+    value: true
+  .properties.network_selector.nsx.nsx-t-ca-cert:
+    value: ((pks.product-properties.properties.network_selector.nsx.nsx-t-ca-cert))
+  .properties.network_selector.nsx.nsx-t-host:
+    value: ((pks.product-properties.properties.network_selector.nsx.nsx-t-host))
+  .properties.network_selector.nsx.nsx-t-insecure:
+    value: ((pks.product-properties.properties.network_selector.nsx.nsx-t-insecure))
+  .properties.network_selector.nsx.nsx-t-superuser-certificate:
+    value:
+      cert_pem: ((pks.product-properties.properties.network_selector.nsx.nsx-t-superuser-certificate.certificate))
+      private_key_pem: ((pks.product-properties.properties.network_selector.nsx.nsx-t-superuser-certificate.private_key))
+  .properties.network_selector.nsx.t0-router-id:
+    value: ((pks.product-properties.properties.network_selector.nsx.t0-router-id))
+  .properties.network_selector.nsx.vcenter_cluster:
+    value: ((pks.product-properties.properties.network_selector.nsx.vcenter_cluster))
+  .properties.pks-vrli:
+    value: disabled
+  .properties.pks_api_hostname:
+    value: ((pks.product-properties.properties.pks_api_hostname))
+  .properties.plan1_selector:
+    value: ((pks.product-properties.properties.plan1_selector.status))
+  .properties.plan2_selector:
+    value: ((pks.product-properties.properties.plan2_selector.status))
+  .properties.plan3_selector:
+    value: ((pks.product-properties.properties.plan3_selector.status))
+  .properties.proxy_selector:
+    value: ((pks.product-properties.properties.proxy_selector))
+  .properties.sink_resources_selector:
+    value: ((pks.product-properties.properties.sink_resources_selector))
+  .properties.syslog_selector:
+    value: ((pks.product-properties.properties.syslog_selector))
+  .properties.telemetry_selector:
+    value: ((pks.product-properties.properties.telemetry_selector))
+  .properties.telemetry_selector.enabled.billing_polling_interval:
+    value: 60
+  .properties.telemetry_selector.enabled.telemetry_polling_interval:
+    value: 600
+  .properties.telemetry_selector.enabled.telemetry_url:
+    value: https://vcsa.vmware.com
+  .properties.uaa:
+    value: ((pks.product-properties.properties.uaa))
+  .properties.uaa_oidc:
+    value: false
+  .properties.uaa_pks_cli_access_token_lifetime:
+    value: 600
+  .properties.uaa_pks_cli_refresh_token_lifetime:
+    value: 21600
+  .properties.wavefront:
+    value: ((pks.product-properties.properties.wavefront))
+  .properties.worker_max_in_flight:
+    value: ((pks.product-properties.properties.worker_max_in_flight))
+network-properties: ((pks.network-properties))
+resource-config:
+  pivotal-container-service:
+    instances: ((pks.resource-config.pivotal-container-service.instances))
+    persistent_disk:
+      size_mb: ((pks.resource-config.pivotal-container-service.persistent_disk))
+    instance_type:
+      id: ((pks.resource-config.pivotal-container-service.instance_type))
+errand-config:
+  delete-all-clusters:
+    pre-delete-state: ((pks.errand-config.delete-all-clusters))
+  pks-nsx-t-precheck:
+    post-deploy-state: ((pks.errand-config.pks-nsx-t-precheck))
+  smoke-tests:
+    post-deploy-state: ((pks.errand-config.smoke-tests))
+  upgrade-all-service-instances:
+    post-deploy-state: ((pks.errand-config.upgrade-all-service-instances))
+  wavefront-alert-creation:
+    post-deploy-state: ((pks.errand-config.wavefront-alert-creation))
+  wavefront-alert-deletion:
+    pre-delete-state: ((pks.errand-config.wavefront-alert-deletion))

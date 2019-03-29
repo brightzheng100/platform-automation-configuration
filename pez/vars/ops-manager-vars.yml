@@ -1,0 +1,26 @@
+---
+vsphere:
+  vcenter:
+    url: https://vcsa-01.haas-XXX.pez.pivotal.io
+    username: ((vcenter_user.username))
+    password: ((vcenter_user.password))
+    datastore: LUN01
+    ca_cert: ""
+    host: sc2-host-b103-02.haas-XXX.pez.pivotal.io  # vCenter host to deploy Ops Manager in
+    datacenter: Datacenter
+    resource_pool: /Datacenter/host/Cluster   # or /<Data Center Name>/host/<Cluster Name>
+    folder: /Datacenter/vm/pks                # /<Data Center Name>/vms/<Folder>
+    insecure: 1                               # default: 0 (secure); 1 (insecure)
+  disk_type: thick                            # example: thin|thick
+  private_ip: 172.16.1.10
+  dns: 10.192.2.10,10.192.2.11
+  ntp: time.svc.pivotal.io                    # example: ntp.ubuntu.com
+  ssh_password: ((ssh_password))
+  ssh_public_key: ""                          # for OpsManager >= 2.3
+  hostname: opsmgr-02.haas-XXX.pez.pivotal.io
+  network: pks-infrastructure-ls              # vcenter network to deploy to
+  netmask: 255.255.255.0
+  gateway: 172.16.1.1
+  vm_name: ops-manager                        # default: Ops_Manager
+  memory: 8                                   # default: 8 GB
+  cpu: 1                                      # default: 1

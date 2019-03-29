@@ -1,0 +1,66 @@
+---
+pks:
+
+  # product-properties
+  product-properties:
+    pks_tls: ((pks/product-properties/pks_tls))
+    properties:
+      cloud_provider: 
+        type: vSphere
+      network_selector:
+        type: nsx
+        nsx:
+          cloud-config-dns: 10.192.2.10,10.192.2.11
+          floating-ip-pool-ids: ((pks/product-properties/floating_ip_pool_ids))
+          ip-block-id: ((pks/product-properties/pods_ip_block_ids))
+          nodes-ip-block-id: ((pks/product-properties/nodes_ip_block_ids))
+          nat_mode: true
+          nsx-t-ca-cert: ((nsx_ca_certificate.certificate))
+          nsx-t-host: nsxmgr-01.haas-205.pez.pivotal.io
+          nsx-t-insecure: true
+          t0-router-id: ((pks/product-properties/t0_router_id))
+          nsx-t-superuser-certificate: ((pks/product-properties/nsx-t_superuser_certificate))
+          vcenter_cluster: Cluster
+      pks_api_hostname: api.pks.haas-205.pez.pivotal.io
+      plan1_selector:
+        status: "Plan Active"
+      plan2_selector:
+        status: "Plan Active"
+      plan3_selector:
+        status: "Plan Inactive"
+      proxy_selector: Disabled
+      sink_resources_selector: enabled
+      syslog_selector: disabled
+      telemetry_selector: enabled
+      uaa: internal
+      wavefront: disabled
+      worker_max_in_flight: 1
+  
+  # network-properties
+  network-properties:
+    network:
+      name: PKS-Infrastructure
+    other_availability_zones:
+    - name: AZ1
+    - name: AZ2
+    - name: AZ3
+    service_network:
+      name: PKS-Infrastructure  # When using NSX-T, the "services" network is NOT required so here we can simply select the one as "network"
+    singleton_availability_zone:
+      name: AZ1
+
+  # resource-config
+  resource-config:
+    pivotal-container-service:
+      instances: automatic
+      persistent_disk: automatic
+      instance_type: automatic
+
+  # errand-config
+  errand-config:
+    delete-all-clusters: true
+    pks-nsx-t-precheck: true
+    smoke-tests: false
+    upgrade-all-service-instances: true
+    wavefront-alert-creation: false
+    wavefront-alert-deletion: false

@@ -1,0 +1,31 @@
+---
+
+# Product: OpsMan
+# The config for an Ops Manager described IAAS specific information for creating the VM
+
+opsman-configuration:
+  vsphere:
+    vcenter:
+      url: ((vsphere.vcenter.url))
+      username: ((vsphere.vcenter.username))
+      password: ((vsphere.vcenter.password))
+      datastore: ((vsphere.vcenter.datastore))
+      ca_cert: ((vsphere.vcenter.ca_cert))
+      host: ((vsphere.vcenter.host))                    # vCenter host to deploy Ops Manager in
+      datacenter: ((vsphere.vcenter.datacenter))
+      resource_pool: ((vsphere.vcenter.resource_pool))  # or /<Data Center Name>/host/<Cluster Name>
+      folder: ((vsphere.vcenter.folder))
+      insecure: ((vsphere.vcenter.insecure))            # default: 0 (secure); 1 (insecure)
+    disk_type: ((vsphere.disk_type))                    # example: thin|thick
+    private_ip: ((vsphere.private_ip))
+    dns: ((vsphere.dns))
+    ntp: ((vsphere.ntp))                                # example: ntp.ubuntu.com
+    ssh_password: ((vsphere.ssh_password))
+    ssh_public_key: ((vsphere.ssh_public_key))          # for OpsManager >= 2.3
+    hostname: ((vsphere.hostname))
+    network: ((vsphere.network))                        # vcenter network to deploy to
+    netmask: ((vsphere.netmask))
+    gateway: ((vsphere.gateway))
+    vm_name: ((vsphere.vm_name))                        # default: Ops_Manager
+    memory: ((vsphere.memory))                          # default: 8 GB
+    cpu: ((vsphere.cpu))                                # default: 1

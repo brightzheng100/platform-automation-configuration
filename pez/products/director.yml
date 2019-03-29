@@ -1,0 +1,84 @@
+---
+
+# Product: BOSH Director
+# Notes:
+# 1. This is the sample product config file for OpsMan BOSH Director, on vSphere
+# 2. The variables may vary for different IaaSes and configuration preference
+# 3. It's recommended to establish the config baseline by generating the staged config and parameterizing it for futher upgrade/patch
+# 4. Do note that there was a breaking change from v2.0.0-beta.1 for director.yml
+
+az-configuration: ((director.az-configuration))
+network-assignment:
+  network:
+    name: ((director.network-assignment.network))
+  other_availability_zones: []
+  singleton_availability_zone:
+    name: ((director.network-assignment.singleton_availability_zone))
+networks-configuration:
+  icmp_checks_enabled: ((director.networks-configuration.icmp_checks_enabled))
+  networks: ((director.networks-configuration.networks))
+properties-configuration:
+  director_configuration:
+    allow_legacy_agents: true
+    blobstore_type: ((director.properties-configuration.director_configuration.blobstore_type))
+    bosh_recreate_on_next_deploy: false
+    bosh_recreate_persistent_disks_on_next_deploy: false
+    database_type: ((director.properties-configuration.director_configuration.database_type))
+    director_worker_count: 5
+    encryption:
+      keys: []
+      providers: []
+    hm_emailer_options:
+      enabled: false
+    hm_pager_duty_options:
+      enabled: false
+    identification_tags: {}
+    keep_unreachable_vms: false
+    local_blobstore_options:
+      tls_enabled: true
+    ntp_servers_string: ((director.properties-configuration.director_configuration.ntp_servers_string))
+    post_deploy_enabled: ((director.properties-configuration.director_configuration.post_deploy_enabled))
+    resurrector_enabled: ((director.properties-configuration.director_configuration.resurrector_enabled))
+    retry_bosh_deploys: false
+    skip_director_drain: true
+  dns_configuration:
+    excluded_recursors: []
+    handlers: []
+  iaas_configuration:
+    additional_cloud_properties: {}
+    bosh_disk_path: ((director.properties-configuration.iaas_configuration.bosh_disk_path))
+    bosh_template_folder: ((director.properties-configuration.iaas_configuration.bosh_template_folder))
+    bosh_vm_folder: ((director.properties-configuration.iaas_configuration.bosh_vm_folder))
+    datacenter: ((director.properties-configuration.iaas_configuration.datacenter))
+    disk_type: ((director.properties-configuration.iaas_configuration.disk_type))
+    ephemeral_datastores_string: ((director.properties-configuration.iaas_configuration.ephemeral_datastores_string))
+    persistent_datastores_string: ((director.properties-configuration.iaas_configuration.persistent_datastores_string))
+    guid: ((director.properties-configuration.iaas_configuration.guid))
+    name: ((director.properties-configuration.iaas_configuration.name))
+    nsx_address: ((director.properties-configuration.iaas_configuration.nsx_address))
+    nsx_ca_certificate: ((director.properties-configuration.iaas_configuration.nsx_ca_certificate))
+    nsx_mode: ((director.properties-configuration.iaas_configuration.nsx_mode))
+    nsx_networking_enabled: ((director.properties-configuration.iaas_configuration.nsx_networking_enabled))
+    nsx_username: ((director.properties-configuration.iaas_configuration.nsx_username))
+    nsx_password: ((director.properties-configuration.iaas_configuration.nsx_password))
+    ssl_verification_enabled: ((director.properties-configuration.iaas_configuration.ssl_verification_enabled))
+    vcenter_host: ((director.properties-configuration.iaas_configuration.vcenter_host))
+    vcenter_username: ((director.properties-configuration.iaas_configuration.vcenter_username))
+    vcenter_password: ((director.properties-configuration.iaas_configuration.vcenter_password))
+  security_configuration:
+    generate_vm_passwords: true
+    opsmanager_root_ca_trusted_certs: true
+  syslog_configuration:
+    enabled: false
+resource-configuration:
+  compilation:
+    instances: automatic
+    instance_type:
+      id: automatic
+  director:
+    instances: ((director.resource-configuration.director.instances))
+    persistent_disk:
+      size_mb: ((director.resource-configuration.director.persistent_disk))
+    instance_type: 
+      id: ((director.resource-configuration.director.instance_type))
+vmextensions-configuration: []
