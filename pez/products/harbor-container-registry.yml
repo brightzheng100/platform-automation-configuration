@@ -1,0 +1,47 @@
+product-name: harbor-container-registry
+product-properties:
+  .harbor-app.static_ips:
+    value: ((harbor.product-properties.harbor-app.static_ips))
+  .properties.admin_password:
+    value:
+      secret: ((harbor.product-properties.properties.admin_password))
+  .properties.admin_password_for_smoketest:
+    value:
+      secret: ((harbor.product-properties.properties.admin_password_for_smoketest))
+  .properties.auth_mode:
+    value: ((harbor.product-properties.properties.auth_mode))
+  .properties.clair_updater_interval:
+    value: 0
+  .properties.customize_container_network:
+    value: default
+  .properties.hostname:
+    value: ((harbor.product-properties.properties.hostname))
+  .properties.no_proxy:
+    value: ((harbor.product-properties.properties.no_proxy))
+  .properties.registry_storage:
+    value: ((harbor.product-properties.properties.registry_storage))
+  .properties.server_cert_key:
+    value:
+      cert_pem: ((harbor.product-properties.properties.server_cert_key.certificate))
+      private_key_pem: ((harbor.product-properties.properties.server_cert_key.private_key))
+  .properties.with_clair:
+    value: true
+  .properties.with_notary:
+    value: true
+network-properties: ((harbor.network-properties))
+resource-config:
+  harbor-app:
+    instances: ((harbor.resource-config.harbor-app.instances))
+    persistent_disk:
+      size_mb: ((harbor.resource-config.harbor-app.persistent_disk))
+    instance_type:
+      id: ((harbor.resource-config.harbor-app.instance_type))
+  smoke-testing:
+    instances: ((harbor.resource-config.smoke-testing.instances))
+    instance_type:
+      id: ((harbor.resource-config.smoke-testing.instance_type))
+errand-config:
+  smoke-testing:
+    post-deploy-state: ((harbor.errand-config.smoke-testing))
+  uaa-deregistration:
+    pre-delete-state: ((harbor.errand-config.uaa-deregistration))

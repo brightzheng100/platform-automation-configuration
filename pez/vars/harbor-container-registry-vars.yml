@@ -1,0 +1,37 @@
+---
+harbor:
+
+  product-properties:
+    harbor-app:
+      static_ips: 172.16.1.20
+    properties:
+      admin_password: ((harbor/admin_password))
+      admin_password_for_smoketest: ((harbor/admin_password_for_smoketest))
+      auth_mode: db_auth
+      hostname: harbor.haas-xxx.pez.pivotal.io
+      no_proxy: 127.0.0.1,localhost,ui,registry
+      registry_storage: filesystem
+      server_cert_key: ((harbor/server_cert_key))
+
+  network-properties:
+    network:
+      name: PKS-Infrastructure
+    other_availability_zones:
+    - name: AZ1
+    - name: AZ2
+    - name: AZ3
+    singleton_availability_zone:
+      name: AZ1
+
+  resource-config:
+    harbor-app:
+      instances: automatic
+      persistent_disk: automatic
+      instance_type: automatic
+    smoke-testing:
+      instances: automatic
+      instance_type: automatic
+
+  errand-config:
+    smoke-testing: when-changed
+    uaa-deregistration: false

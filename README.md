@@ -1,8 +1,8 @@
-## Sample Git Repo for `platform-automation`
+## Sample Git Repo for [`platform-automation-pipelines`](https://github.com/brightzheng100/platform-automation-pipelines)
 
 ### Overview
 
-Below is just as a sample folder structure which has 2 fundations, namely `dev` and `pez`.
+Below is just as a sample folder structure which has 2 fundations, namely `dev` (on GCP) and `pez` (on vSphere).
 
 ```
 .
