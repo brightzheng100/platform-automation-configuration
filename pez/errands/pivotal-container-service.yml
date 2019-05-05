@@ -1,0 +1,9 @@
+errands:
+  pivotal-container-service:
+    run_post_deploy:
+      pks-nsx-t-precheck: true
+      upgrade-all-service-instances: true
+      wavefront-alert-creation: false
+    run_pre_delete:
+      delete-all-clusters: true
+      wavefront-alert-deletion: false

@@ -52,9 +52,11 @@ pks:
       - tcp:pcf-gcp-pks-api
 
   # errand-config
+  # Note: these become the "static" default settings so make it as less enabled as possible to avoid unnecessary execution
+  #       we can control them better in "apply changes" by using /errands/<product_slug>.yml
   errand-config:
     delete-all-clusters: true
     pks-nsx-t-precheck: false
-    upgrade-all-service-instances: true
+    upgrade-all-service-instances: false
     wavefront-alert-creation: false
     wavefront-alert-deletion: false

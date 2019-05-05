@@ -1,0 +1,11 @@
+errands:
+  cf:
+    run_post_deploy:
+      deploy-autoscaler: true
+      deploy-notifications: false
+      deploy-notifications-ui: false
+      nfsbrokerpush: false
+      push-apps-manager: true
+      push-usage-service: true
+      smoke_tests: true
+      test-autoscaling: true

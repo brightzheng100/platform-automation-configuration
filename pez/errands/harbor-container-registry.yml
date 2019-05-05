@@ -1,0 +1,6 @@
+errands:
+  harbor-container-registry:
+    run_post_deploy:
+      smoke-testing: true
+    run_pre_delete:
+      uaa-deregistration: false

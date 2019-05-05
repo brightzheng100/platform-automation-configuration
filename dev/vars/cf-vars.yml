@@ -63,6 +63,8 @@ cf:
       instances: 0
 
   # errand-config
+  # Note: these become the "static" default settings so make it as less enabled as possible to avoid unnecessary execution
+  #       we can control them better in "apply changes" by using /errands/<product_slug>.yml
   errand-config:
     delete-pivotal-account: true
     deploy-autoscaler: false
