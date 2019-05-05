@@ -48,10 +48,6 @@ $ tree .
 │       ├── harbor-container-registry-vars.yml
 │       ├── ops-manager-vars.yml
 │       └── pivotal-container-service-vars.yml
-├── pcf-dev
-│   └── generated-config
-│       ├── cf-2.3.4.yml
-│       └── director-2.3.4.yml
 └── pez
     ├── config
     │   ├── auth-ldap.yml
