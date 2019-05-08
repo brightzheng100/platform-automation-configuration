@@ -6,7 +6,7 @@ vsphere:
     password: ((vcenter_user.password))
     datastore: LUN01
     ca_cert: ""
-    host: sc2-host-b103-02.haas-XXX.pez.pivotal.io  # vCenter host to deploy Ops Manager in
+    host: ""                                  # optional, vCenter host to deploy Ops Manager in
     datacenter: Datacenter
     resource_pool: /Datacenter/host/Cluster   # or /<Data Center Name>/host/<Cluster Name>
     folder: /Datacenter/vm/pks                # /<Data Center Name>/vms/<Folder>
