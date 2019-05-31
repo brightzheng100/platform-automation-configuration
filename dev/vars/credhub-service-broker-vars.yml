@@ -7,14 +7,17 @@
 # 2. This should work together with "/products/credhub-service-broker.yml" to parameterize the product config
 # 3. The values of the YAML elements can be: a) simple static values, or 2) values stored in CredHub
 
-credhub-service-broker:
-  product-properties:
-  network-properties:
-    network: services
-    other_availability_zones:
-    - name: us-central1-a
-    - name: us-central1-b
-    - name: us-central1-c
-    singleton_availability_zone:
-      name: us-central1-a
-  resource-config:
+product-properties:
+network-properties:
+  network: services
+  other_availability_zones:
+  - name: us-central1-a
+  - name: us-central1-b
+  - name: us-central1-c
+  singleton_availability_zone:
+    name: us-central1-a
+resource-config:
+
+errand-config:
+ delete-all: true
+ deploy-all: true

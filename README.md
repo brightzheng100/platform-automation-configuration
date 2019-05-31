@@ -10,79 +10,71 @@ $ tree .
 ├── README.md
 ├── dev
 │   ├── config
-│   │   ├── auth-ldap.yml
-│   │   ├── auth-saml.yml
-│   │   └── auth.yml
+│   │   ├── auth.yml
+│   │   └── global.yml
 │   ├── env
 │   │   └── env.yml
 │   ├── errands
-│   │   ├── credhub-service-broker.yml
-│   │   ├── harbor-container-registry.yml
-│   │   └── pivotal-container-service.yml
+│   │   └── errands.yml
 │   ├── generated-config
-│   │   ├── cf-2.2.11.yml
-│   │   ├── credhub-service-broker-1.1.0.yml
-│   │   ├── credhub-service-broker-1.2.0.yml
-│   │   ├── credhub-service-broker-1.3.1.yml
-│   │   ├── director-2.2.10.yml
-│   │   ├── director-2.3.3.yml
-│   │   ├── director-2.4.1.yml
-│   │   ├── director-2.4.9.yml
-│   │   ├── director.yml
-│   │   ├── harbor-container-registry-1.7.5.yml
-│   │   └── pivotal-container-service-1.4.0.yml
-│   ├── products
-│   │   ├── cf-errands.yml
-│   │   ├── cf.yml
 │   │   ├── credhub-service-broker.yml
 │   │   ├── director.yml
+│   │   ├── elastic-runtime.yml
+│   │   ├── harbor-container-registry.yml
+│   │   ├── p-redis.yml
+│   │   ├── p-scheduler.yml
+│   │   └── pivotal-container-service.yml
+│   ├── products
+│   │   ├── credhub-service-broker.yml
+│   │   ├── director.yml
+│   │   ├── elastic-runtime.yml
 │   │   ├── harbor-container-registry.yml
 │   │   ├── ops-manager.yml
+│   │   ├── p-redis.yml
 │   │   └── pivotal-container-service.yml
+│   ├── products.yml
 │   ├── state
 │   │   └── state.yml
 │   └── vars
-│       ├── cf-vars.yml
 │       ├── credhub-service-broker-vars.yml
 │       ├── director-vars.yml
+│       ├── elastic-runtime-vars.yml
 │       ├── harbor-container-registry-vars.yml
 │       ├── ops-manager-vars.yml
+│       ├── p-redis-vars.yml
 │       └── pivotal-container-service-vars.yml
 └── pez
-    ├── config
-    │   ├── auth-ldap.yml
-    │   ├── auth-saml.yml
-    │   └── auth.yml
-    ├── env
-    │   └── env.yml
-    ├── generated-config
-    │   ├── director-2.4.4.yml
-    │   ├── harbor-container-registry-1.7.*.yml
-    │   ├── harbor-container-registry-1.7.4.yml
-    │   └── pivotal-container-service-1.3.2.yml
-    ├── products
-    │   ├── director.yml
-    │   ├── harbor-container-registry.yml
-    │   ├── ops-manager.yml
-    │   └── pivotal-container-service.yml
-    ├── state
-    │   └── state.yml
-    └── vars
-        ├── director-vars.yml
-        ├── harbor-container-registry-vars.yml
-        ├── ops-manager-vars.yml
-        └── pivotal-container-service-vars.yml
+...
 ```
 
 ### Detailed Description
 
 | Folder/File | Purposes | Samples  |
 | --- | --- | --- |
-| `<FOUNDATION-CODE>`  | As the root folder for a dedicated foundation | This can be something like `dev`, `qa`, `sit`, `prod` etc. which is up to the team's convention to name the foundations. |
-| config | A folder for global configs. Currently there is only one `auth.yml` to configure the OpsMan authentication. | The default `auth.yml` is for basic authentication. Please refer to sample of `auth-ldap.yml` and `auth-saml.yml` for other mechanisms |
+| `<FOUNDATION_CODE>`  | As the root folder for a dedicated foundation | This can be something like `dev`, `qa`, `sit`, `prod` etc. which is up to the team's convention to name the foundations. |
+| config | A folder for global configs. Currently there are two files: `auth.yml` to configure the OpsMan authentication; `global.yml` for some common configuration which may require CredHub interpolation | The default `auth.yml` is for basic authentication. Please refer to sample of `auth-ldap.yml` and `auth-saml.yml` for other mechanisms |
 | env | A folder to contain properties for targeting and logging into the Ops Manager API.  | Currently there is only one `env.yml` to configure the properties so that the `platform-automation` tasks can use `om --env the-path-to/env.yml <COMMAND> ...` to interact with OpsMan APIs |
-| errands | A folder to contain errand config files to control errands while applying changes.  | A naming convention of `<PRODUCT-NAME>.yml` will be applied to all the files within this folder, e.g. `cf.yml`. For the config file format please refer to `om` Doc [here](https://github.com/pivotal-cf/om/tree/master/docs/apply-changes).  |
-| generated-config | A folder to contain automatically generated product config files during operations, it should start with no files  | A naming convention of `<PRODUCT-NAME>-<PRODUCT-VERSION>.yml` will be applied to all the files within this folder, e.g. `cf-2.2.11.yml`, `director-2.4.1.yml` |
+| errands | A folder to contain errand config files to control errands while applying changes. **For experiment only**  | A naming convention of `<PRODUCT_SLUG>.yml` will be applied to all the files within this folder, e.g. `cf.yml`. For the config file format please refer to `om` Doc [here](https://github.com/pivotal-cf/om/tree/master/docs/apply-changes).  |
+| generated-config | A folder to contain automatically generated product config files during operations, it should start with no files  | A naming convention of `<PRODUCT_SLUG>.yml` will be applied to all the files within this folder, e.g. `director.yml`, `pivotal-container-service.yml` |
 | products | A folder to contain templatized product configs  | A couple of samples have been provided but please remove all of them to start with |
 | state | A folder to contain the meta information named `state.yml` to manage the Ops Manager VM. This content of this file will be managed by pipelines during operations.  | A sample has been provided for GCP. Please change the IaaS code to meet your context |
 | vars | A folder to contain vars for templatized product configs in folder of `/products` | A couple of samples have been provided but please remove all of them to start with |
+
+
+### Evolving Practices
+
+**1. The naming of the files**
+   
+Previously I used `<PRODUCT_NAME>` but found that it's confusing because we can't easily know what the real `<PRODUCT_NAME>` is until you stage it on PCF.
+Now all are based on `<PRODUCT_SLUG>`, that we can easily get it back by simply issuing `$ pivnet products`.
+
+**2. The semver-based config for all products**
+
+A `<FOUNDATION_CODE/products.yml` file is added to have one centralized semantic based config for all products.
+Now you can easily embrace GitOps by mantaining this file for the whole foundation.
+Thanks to the newly built [Semver Config Concourse Resource](https://github.com/brightzheng100/semver-config-concourse-resource), the version changes can be properly handled by different pipelines: `upgrade`s go to `install-upgrade-products` and `patch`s go to `patch-products`.
+Check it out and share your feedback!
+
+**3. Added a `global.yaml` config file under `<FOUNDATION_CODE>/config/`**
+
+Sometimes we need some more global configs, especially for those require CredHub interpolation, e.g. `pivnet_token`. This is the right place to host them.

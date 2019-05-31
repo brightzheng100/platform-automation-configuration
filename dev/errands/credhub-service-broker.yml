@@ -1,6 +1,0 @@
-errands:
-  credhub-service-broker:
-    run_post_deploy:
-      deploy-all: true
-    run_pre_delete:
-      delete-all: true

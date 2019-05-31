@@ -1,0 +1,42 @@
+---
+
+# Important Notes:
+# 1. The config under `/products/<PRODUCT_ALIAS>` must be compatible with `download-product` config file.
+#    Ref: http://docs.pivotal.io/platform-automation/v3.0/reference/inputs-outputs.html#download-product-config
+# 2. For OpsMan, we must not set `stemcell-iaas` while all others must set it with the right value
+# 3. The options available for `stemcell-iaas`: vsphere; vcloud; openstack; google; azure; aws
+
+products:
+
+  # ==== Ops Manager
+  opsman:
+    product-version: "2.4.9"
+    pivnet-product-slug: ops-manager
+    pivnet-api-token: ((pivnet_token))
+    pivnet-file-glob: "*GCP.yml"
+
+  # ==== Products
+
+  # PAS
+  pas:
+    product-version: "2.3.5"
+    pivnet-product-slug: elastic-runtime
+    pivnet-api-token: ((pivnet_token))
+    pivnet-file-glob: "srt-*.pivotal"           # For full fledged PAS, use "cf-*.pivotal"
+    stemcell-iaas: google
+
+  # CSB
+  csb:
+    product-version: "1.1.0"
+    pivnet-product-slug: credhub-service-broker
+    pivnet-api-token: ((pivnet_token))
+    pivnet-file-glob: "*.pivotal"
+    stemcell-iaas: google
+
+  # Redis
+  redis:
+    product-version: "2.0.1"
+    pivnet-product-slug: p-redis
+    pivnet-api-token: ((pivnet_token))
+    pivnet-file-glob: "*.pivotal"
+    stemcell-iaas: google

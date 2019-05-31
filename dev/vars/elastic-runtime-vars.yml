@@ -1,0 +1,66 @@
+---
+
+# product-properties
+product-properties:
+  cloud_controller:
+    apps_domain: ((cf/product-properties/apps_domain))
+    system_domain: ((cf/product-properties/system_domain))
+  mysql_monitor:
+    recipient_email: me@mycompany.com
+  uaa:
+    service_provider_key_credentials: ((cf/product-properties/service_provider_key_credentials))
+  properties:
+    credhub_key_encryption_passwords: ((cf/product-properties/credhub_key_encryption_passwords))
+    gorouter_ssl_ciphers: ECDHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384
+    networking_poe_ssl_certs: ((cf/product-properties/networking_poe_ssl_certs))
+    routing_minimum_tls_version: tls_v1_2
+    system_blobstore:
+      type: external_gcs
+      external_gcs:
+        access_key: ((cf/product-properties/system_blobstore_external_gcs_access_key))
+        secret_key: ((cf/product-properties/system_blobstore_external_gcs_secret_key))
+        buildpacks_bucket: fe-xzheng-pcf-gcp-buildpacks
+        droplets_bucket: fe-xzheng-pcf-gcp-droplets
+        packages_bucket: fe-xzheng-pcf-gcp-packages
+        resources_bucket: fe-xzheng-pcf-gcp-resources
+
+# network-properties
+network-properties: 
+  network: {name: pcf-gcp-pas-subnet}
+  other_availability_zones: [{name: us-central1-a},{name: us-central1-b},{name: us-central1-c}]
+  singleton_availability_zone: {name: us-central1-a}
+
+# resource-config
+resource-config:
+  backup_restore:
+    instances: 0
+  blobstore:
+    instances: 0
+  compute:
+    instances: 3
+    additional_networks: [] #[{"guid": "858cf671f43f9b8e555e"}]
+  control:
+    instances: automatic
+    elb_names: ["tcp:pcf-gcp-cf-ssh"]
+  database:
+    instances: automatic
+  ha_proxy:
+    instances: 0
+  mysql_monitor:
+    instances: 0
+  router:
+    instances: automatic
+    elb_names: ["http:pcf-gcp-httpslb","tcp:pcf-gcp-cf-ws"]
+  tcp_router:
+    instances: 0
+
+# errand-config
+errand-config:
+  deploy-autoscaler: false
+  deploy-notifications: false
+  deploy-notifications-ui: false
+  nfsbrokerpush: false
+  push-apps-manager: true
+  push-usage-service: false
+  smoke_tests: false
+  test-autoscaling: false

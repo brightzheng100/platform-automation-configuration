@@ -11,34 +11,34 @@ product-name: pivotal-container-service
 product-properties:
   .pivotal-container-service.pks_tls:
     value:
-      cert_pem: "((pks.product-properties.pks_tls.certificate))"
-      private_key_pem: "((pks.product-properties.pks_tls.private_key))"
+      cert_pem: "((product-properties.pks_tls.certificate))"
+      private_key_pem: "((product-properties.pks_tls.private_key))"
   .properties.cloud_provider:
-    value: "((pks.product-properties.properties.cloud_provider.type))"
+    value: "((product-properties.properties.cloud_provider.type))"
   .properties.cloud_provider.gcp.project_id:
-    value: "((pks.product-properties.properties.cloud_provider.gcp.project_id))"
+    value: "((product-properties.properties.cloud_provider.gcp.project_id))"
   .properties.cloud_provider.gcp.network:
-    value: "((pks.product-properties.properties.cloud_provider.gcp.network))"
+    value: "((product-properties.properties.cloud_provider.gcp.network))"
   .properties.cloud_provider.gcp.master_service_account:
-    value: "((pks.product-properties.properties.cloud_provider.gcp.master_service_account))"
+    value: "((product-properties.properties.cloud_provider.gcp.master_service_account))"
   .properties.cloud_provider.gcp.worker_service_account:
-    value: "((pks.product-properties.properties.cloud_provider.gcp.worker_service_account))"
+    value: "((product-properties.properties.cloud_provider.gcp.worker_service_account))"
   .properties.network_selector:
     value: flannel
   .properties.pks-vrli:
     value: disabled
   .properties.pks_api_hostname:
-    value: "((pks.product-properties.properties.pks_api_hostname))"
+    value: "((product-properties.properties.pks_api_hostname))"
   .properties.plan1_selector:
-    value: "((pks.product-properties.properties.plan1_selector.status))"
+    value: "((product-properties.properties.plan1_selector.status))"
   .properties.plan1_selector.active.master_az_placement:
-    value: "((pks.product-properties.properties.plan1_selector.active.master_az_placement))"
+    value: "((product-properties.properties.plan1_selector.active.master_az_placement))"
   .properties.plan1_selector.active.worker_az_placement:
-    value: "((pks.product-properties.properties.plan1_selector.active.worker_az_placement))"
+    value: "((product-properties.properties.plan1_selector.active.worker_az_placement))"
   .properties.plan2_selector:
-    value: "((pks.product-properties.properties.plan2_selector.status))"
+    value: "((product-properties.properties.plan2_selector.status))"
   .properties.plan3_selector:
-    value: "((pks.product-properties.properties.plan3_selector.status))"
+    value: "((product-properties.properties.plan3_selector.status))"
   .properties.proxy_selector:
     value: Disabled
   .properties.sink_resources:
@@ -54,17 +54,17 @@ product-properties:
   .properties.uaa_pks_cli_refresh_token_lifetime:
     value: 172800
   .properties.vm_extensions:
-    value: "((pks.product-properties.properties.vm_extensions))"
+    value: "((product-properties.properties.vm_extensions))"
   .properties.wavefront:
-    value: "((pks.product-properties.properties.wavefront))"
+    value: "((product-properties.properties.wavefront))"
   .properties.worker_max_in_flight:
     value: 1
 network-properties:
   network:
-    name: ((pks.network-properties.network))
-  other_availability_zones: ((pks.network-properties.other_availability_zones))
-  service_network: ((pks.network-properties.service_network))
-  singleton_availability_zone: ((pks.network-properties.singleton_availability_zone))
+    name: ((network-properties.network))
+  other_availability_zones: ((network-properties.other_availability_zones))
+  service_network: ((network-properties.service_network))
+  singleton_availability_zone: ((network-properties.singleton_availability_zone))
 resource-config:
   pivotal-container-service:
     instances: automatic
@@ -73,15 +73,15 @@ resource-config:
     instance_type:
       id: automatic
     internet_connected: true
-    elb_names: ((pks.resource-config.pivotal-container-service.elb_names))
+    elb_names: ((resource-config.pivotal-container-service.elb_names))
 errand-config:
   delete-all-clusters:
-    pre-delete-state: ((pks.errand-config.delete-all-clusters))
+    pre-delete-state: ((errand-config.delete-all-clusters))
   pks-nsx-t-precheck:
-    post-deploy-state: ((pks.errand-config.pks-nsx-t-precheck))
+    post-deploy-state: ((errand-config.pks-nsx-t-precheck))
   upgrade-all-service-instances:
-    post-deploy-state: ((pks.errand-config.upgrade-all-service-instances))
+    post-deploy-state: ((errand-config.upgrade-all-service-instances))
   wavefront-alert-creation:
-    post-deploy-state: ((pks.errand-config.wavefront-alert-creation))
+    post-deploy-state: ((errand-config.wavefront-alert-creation))
   wavefront-alert-deletion:
-    pre-delete-state: ((pks.errand-config.wavefront-alert-deletion))
+    pre-delete-state: ((errand-config.wavefront-alert-deletion))

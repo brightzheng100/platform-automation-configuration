@@ -1,10 +1,3 @@
----
-
-# Product: credhub-service-broker
-
-# Notes:
-# 1. This is the sample product config file for CredHub Service Broker
-
 product-name: credhub-service-broker
 product-properties:
   .properties.allow_paid_service_plans:
@@ -19,9 +12,9 @@ product-properties:
     value: credhub-service-broker-space
 network-properties:
   network:
-    name: ((credhub-service-broker.network-properties.network))
-  other_availability_zones: ((credhub-service-broker.network-properties.other_availability_zones))
-  singleton_availability_zone: ((credhub-service-broker.network-properties.singleton_availability_zone))
+    name: ((network-properties.network))
+  other_availability_zones: ((network-properties.other_availability_zones))
+  singleton_availability_zone: ((network-properties.singleton_availability_zone))
 resource-config:
   delete-all:
     instances: automatic
@@ -35,7 +28,7 @@ resource-config:
     internet_connected: true
 errand-config:
   delete-all:
-    pre-delete-state: true
+    pre-delete-state: ((errand-config.delete-all))
   deploy-all:
-    post-deploy-state: true
+    post-deploy-state: ((errand-config.deploy-all))
 

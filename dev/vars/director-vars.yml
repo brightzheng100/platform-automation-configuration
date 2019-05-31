@@ -1,21 +1,81 @@
 ---
+# az-configuration
+az_configuration: [{name: us-central1-a},{name: us-central1-b},{name: us-central1-c}]
 
-# vars file for product: OpsMan BOSH Director
+# network-assignment
+network-assignment:
+  network: {name: pcf-gcp-management-subnet}
+  singleton_availability_zone: {name: us-central1-a}
 
-# Notes:
-# 1. This is the sample product config vars file for OpsMan BOSH Director
-# 2. This should work together with "/products/director.yml" to parameterize the product config
-# 3. The values of the YAML elements can be: a) simple static values, or 2) values stored in CredHub
+# networks-configuration
+networks-configuration:
+  networks:
+  - name: pcf-gcp-management-subnet
+    subnets:
+    - iaas_identifier: pcf-gcp-pcf-network/pcf-gcp-management-subnet/us-central1
+      cidr: 10.0.2.0/24
+      dns: 169.254.169.254, 8.8.8.8
+      gateway: 10.0.2.1
+      reserved_ip_ranges: 10.0.2.1-10.0.2.9
+      availability_zone_names:
+      - us-central1-a
+      - us-central1-b
+      - us-central1-c
+  - name: pcf-gcp-pas-subnet
+    subnets:
+    - iaas_identifier: pcf-gcp-pcf-network/pcf-gcp-pas-subnet/us-central1
+      cidr: 10.0.4.0/24
+      dns: 169.254.169.254, 8.8.8.8
+      gateway: 10.0.4.1
+      reserved_ip_ranges: 10.0.4.1-10.0.4.9
+      availability_zone_names:
+      - us-central1-a
+      - us-central1-b
+      - us-central1-c
+  - name: pks-services
+    subnets:
+    - iaas_identifier: pcf-gcp-pcf-network/pcf-gcp-pks-services/us-central1
+      cidr: 10.0.12.0/24
+      dns: 10.0.12.1
+      gateway: 10.0.12.1
+      reserved_ip_ranges: 10.0.12.1-10.0.12.9
+      availability_zone_names:
+      - us-central1-a
+      - us-central1-b
+      - us-central1-c
+  - name: services
+    subnets:
+    - iaas_identifier: pcf-gcp-pcf-network/pcf-gcp-services-subnet/us-central1
+      cidr: 10.0.8.0/24
+      dns: 169.254.169.254, 8.8.8.8
+      gateway: 10.0.8.1
+      reserved_ip_ranges: 10.0.8.1-10.0.8.9
+      availability_zone_names:
+      - us-central1-a
+      - us-central1-b
+      - us-central1-c
+  - name: extra
+    subnets:
+    - iaas_identifier: pcf-gcp-pcf-network/pcf-gcp-extra-subnet/us-central1
+      cidr: 10.0.15.0/24
+      dns: 169.254.169.254, 8.8.8.8
+      gateway: 10.0.15.1
+      reserved_ip_ranges: 10.0.15.1-10.0.15.9
+      availability_zone_names:
+      - us-central1-a
+      - us-central1-b
+      - us-central1-c
 
-director:
-  # az-configuration
-  az_configuration: [{name: us-central1-a},{name: us-central1-b},{name: us-central1-c}]
-
+properties-configuration:
   # director-configuration
   director-configuration:
     blobstore_type: local
     database_type: internal
     ntp_servers_string: metadata.google.internal
+
+  # security-configuration:
+  security-configuration:
+    generate_vm_passwords: true
 
   # iaas-configuration:
   iaas-configuration:
@@ -23,73 +83,5 @@ director:
     auth_json: ((gcp_service_account))
     project: fe-xzheng
 
-  # network-assignment
-  network-assignment:
-    network: {name: pcf-gcp-management-subnet}
-    singleton_availability_zone: {name: us-central1-a}
-
-  # networks-configuration
-  networks-configuration:
-    networks:
-    - name: pcf-gcp-management-subnet
-      subnets:
-      - iaas_identifier: pcf-gcp-pcf-network/pcf-gcp-management-subnet/us-central1
-        cidr: 10.0.2.0/24
-        dns: 169.254.169.254, 8.8.8.8
-        gateway: 10.0.2.1
-        reserved_ip_ranges: 10.0.2.1-10.0.2.9
-        availability_zone_names:
-        - us-central1-a
-        - us-central1-b
-        - us-central1-c
-    - name: pcf-gcp-pas-subnet
-      subnets:
-      - iaas_identifier: pcf-gcp-pcf-network/pcf-gcp-pas-subnet/us-central1
-        cidr: 10.0.4.0/24
-        dns: 169.254.169.254, 8.8.8.8
-        gateway: 10.0.4.1
-        reserved_ip_ranges: 10.0.4.1-10.0.4.9
-        availability_zone_names:
-        - us-central1-a
-        - us-central1-b
-        - us-central1-c
-    - name: pks-services
-      subnets:
-      - iaas_identifier: pcf-gcp-pcf-network/pcf-gcp-pks-services/us-central1
-        cidr: 10.0.12.0/24
-        dns: 10.0.12.1
-        gateway: 10.0.12.1
-        reserved_ip_ranges: 10.0.12.1-10.0.12.9
-        availability_zone_names:
-        - us-central1-a
-        - us-central1-b
-        - us-central1-c
-    - name: services
-      subnets:
-      - iaas_identifier: pcf-gcp-pcf-network/pcf-gcp-services-subnet/us-central1
-        cidr: 10.0.8.0/24
-        dns: 169.254.169.254, 8.8.8.8
-        gateway: 10.0.8.1
-        reserved_ip_ranges: 10.0.8.1-10.0.8.9
-        availability_zone_names:
-        - us-central1-a
-        - us-central1-b
-        - us-central1-c
-    - name: extra
-      subnets:
-      - iaas_identifier: pcf-gcp-pcf-network/pcf-gcp-extra-subnet/us-central1
-        cidr: 10.0.15.0/24
-        dns: 169.254.169.254, 8.8.8.8
-        gateway: 10.0.15.1
-        reserved_ip_ranges: 10.0.15.1-10.0.15.9
-        availability_zone_names:
-        - us-central1-a
-        - us-central1-b
-        - us-central1-c
-
-  # resource-configuration:
-  resource-configuration:
-
-  # security-configuration:
-  security-configuration:
-    generate_vm_passwords: true
+# resource-configuration:
+resource-configuration:

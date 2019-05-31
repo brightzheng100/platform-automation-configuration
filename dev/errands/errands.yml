@@ -7,3 +7,8 @@ errands:
     run_pre_delete:
       delete-all-clusters: true
       wavefront-alert-deletion: false
+  harbor-container-registry:
+    run_post_deploy:
+      smoke-testing: true
+    run_pre_delete:
+      uaa-deregistration: false

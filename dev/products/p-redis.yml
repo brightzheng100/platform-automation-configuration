@@ -1,0 +1,90 @@
+product-name: p-redis
+product-properties:
+  .cf-redis-broker.redis_maxmemory:
+    value: 512MB
+  .cf-redis-broker.service_instance_limit:
+    value: 5
+  .properties.backups_selector:
+    selected_option: disabled
+    value: No Backups
+  .properties.canary_org_space_selector:
+    selected_option: inactive
+    value: "No"
+  .properties.delete_dedicated_instances_multi_select:
+    value:
+    - I understand the risk
+  .properties.large_plan_selector:
+    selected_option: inactive
+    value: Plan Inactive
+  .properties.medium_plan_selector:
+    selected_option: inactive
+    value: Plan Inactive
+  .properties.metrics_polling_interval:
+    value: 30
+  .properties.small_plan_selector:
+    selected_option: active
+    value: Plan Active
+  .properties.small_plan_selector.active.az_single_select:
+    value: us-central1-a
+  .properties.small_plan_selector.active.cf_service_access:
+    value: enable
+  .properties.small_plan_selector.active.description:
+    value: This plan provides a small dedicated Redis instance, tailored for caching
+      use-cases with persistence to disk enabled
+  .properties.small_plan_selector.active.instance_limit:
+    value: 20
+  .properties.small_plan_selector.active.lua_scripting:
+    value: false
+  .properties.small_plan_selector.active.maxclients:
+    value: 1000
+  .properties.small_plan_selector.active.name:
+    value: cache-small
+  .properties.small_plan_selector.active.tcp_keepalive:
+    value: 60
+  .properties.small_plan_selector.active.timeout:
+    value: 3600
+  .properties.syslog_selector:
+    selected_option: inactive
+    value: "No"
+  .redis-on-demand-broker.maximum_parallel_upgrades:
+    value: 1
+  .redis-on-demand-broker.service_instance_limit:
+    value: 20
+  .redis-on-demand-broker.service_instance_sharing:
+    value: false
+  .redis-on-demand-broker.upgrade_canary_number:
+    value: 1
+network-properties: ((network-properties))
+resource-config:
+  cf-redis-broker:
+    instances: automatic
+    persistent_disk:
+      size_mb: automatic
+    instance_type:
+      id: automatic
+    internet_connected: true
+  redis-on-demand-broker:
+    instances: automatic
+    instance_type:
+      id: automatic
+    internet_connected: true
+errand-config:
+  broker-deregistrar:
+    pre-delete-state: ((errand-config.broker-deregistrar))
+  broker-registrar:
+    post-deploy-state: ((errand-config.broker-registrar))
+  cleanup-metadata-if-dedicated-disabled:
+    post-deploy-state: ((errand-config.cleanup-metadata-if-dedicated-disabled))
+  delete-all-service-instances-and-deregister-broker:
+    pre-delete-state: ((errand-config.delete-all-service-instances-and-deregister-broker))
+  deprecate-dedicated-vm-plan:
+    post-deploy-state: ((errand-config.deprecate-dedicated-vm-plan))
+  on-demand-broker-smoke-tests:
+    post-deploy-state: ((errand-config.on-demand-broker-smoke-tests))
+  register-broker:
+    post-deploy-state: ((errand-config.register-broker))
+  smoke-tests:
+    post-deploy-state: ((errand-config.smoke-tests))
+  upgrade-all-service-instances:
+    post-deploy-state: ((errand-config.upgrade-all-service-instances))
+

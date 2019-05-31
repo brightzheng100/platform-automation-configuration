@@ -1,0 +1,23 @@
+product-properties:
+network-properties:
+  network:
+    name: services
+  other_availability_zones:
+  - name: us-central1-c
+  - name: us-central1-b
+  - name: us-central1-a
+  service_network:
+    name: services
+  singleton_availability_zone:
+    name: us-central1-c
+resource-config:
+errand-config:
+  broker-deregistrar: true
+  broker-registrar: false
+  cleanup-metadata-if-dedicated-disabled: false
+  delete-all-service-instances-and-deregister-broker: true
+  deprecate-dedicated-vm-plan: false
+  on-demand-broker-smoke-tests: false
+  register-broker: true
+  smoke-tests: false
+  upgrade-all-service-instances: true

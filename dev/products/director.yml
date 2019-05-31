@@ -7,19 +7,19 @@
 # 3. It's recommended to establish the config baseline by generating the staged config and parameterizing it for futher upgrade/patch
 # 4. Do note that there was a breaking change from v2.0.0-beta.1 for director.yml
 
-az-configuration: ((director.az_configuration))
+az-configuration: ((az_configuration))
 network-assignment: 
-  network: ((director.network-assignment.network))
+  network: ((network-assignment.network))
   other_availability_zones: []
-  singleton_availability_zone: ((director.network-assignment.singleton_availability_zone))
+  singleton_availability_zone: ((network-assignment.singleton_availability_zone))
 networks-configuration: 
   icmp_checks_enabled: false
-  networks: ((director.networks-configuration.networks))
+  networks: ((networks-configuration.networks))
 properties-configuration:
   director_configuration:
-    blobstore_type: ((director.director-configuration.blobstore_type))
+    blobstore_type: ((properties-configuration.director-configuration.blobstore_type))
     bosh_recreate_on_next_deploy: false
-    database_type: ((director.director-configuration.database_type))
+    database_type: ((properties-configuration.director-configuration.database_type))
     director_worker_count: 5
     disable_dns_release: false
     encryption:
@@ -30,18 +30,18 @@ properties-configuration:
     hm_pager_duty_options:
       enabled: false
     keep_unreachable_vms: false
-    ntp_servers_string: ((director.director-configuration.ntp_servers_string))
+    ntp_servers_string: ((properties-configuration.director-configuration.ntp_servers_string))
     post_deploy_enabled: true
     resurrector_enabled: true
     retry_bosh_deploys: false
   security_configuration:
-    generate_vm_passwords: ((director.security-configuration.generate_vm_passwords))
+    generate_vm_passwords: ((properties-configuration.security-configuration.generate_vm_passwords))
   syslog_configuration:
     enabled: false
   iaas_configuration:
-    associated_service_account: ((director.iaas-configuration.associated_service_account))
-    auth_json: ((director.iaas-configuration.auth_json))
-    project: ((director.iaas-configuration.project))
+    associated_service_account: ((properties-configuration.iaas-configuration.associated_service_account))
+    auth_json: ((properties-configuration.iaas-configuration.auth_json))
+    project: ((properties-configuration.iaas-configuration.project))
   dns_configuration: {}
 resource-configuration:
   compilation:
@@ -57,3 +57,4 @@ resource-configuration:
       id: automatic
     internet_connected: true
 vmextensions-configuration: []
+
