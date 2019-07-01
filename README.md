@@ -2,7 +2,29 @@
 
 ### Overview
 
-Below is just as a sample folder structure which has 2 fundations, namely `dev` (on GCP) and `pez` (on vSphere).
+The recommended folder structure, based on the real-world practices, is as below:
+
+```
+├── README.md
+├── <FOUNDATION-CODE, e.g. qa>
+│    ├── config
+│    │   ├── auth.yml
+│    │   └── global.yml
+│    ├── env
+│    │   └── env.yml
+│    ├── generated-config
+│    │   └── <PRODUCT-SLUG>.yml
+│    ├── products
+│    │   └── <PRODUCT-SLUG>.yml
+│    ├── state
+│    │   └── state.yml
+│    ├── vars
+│    │   └── <PRODUCT-SLUG>-vars.yml
+│    └── products.yml
+└── <ANOTHER FOUNDATION-CODE, e.g. prod>
+```
+
+So here is a sample folder structure that has 2 fundations, namely `dev` (on GCP) and `pez` (on vSphere).
 
 ```
 $ tree .
