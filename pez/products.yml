@@ -1,34 +1,49 @@
 ---
 
 # Important Notes:
-# 1. The config under `/products/<PRODUCT_ALIAS>` must be compatible with `download-product` config file.
+#
+# 1. The config under `.products.<PRODUCT_ALIAS>` must be compatible with `download-product` config file.
 #    Ref: http://docs.pivotal.io/platform-automation/v3.0/reference/inputs-outputs.html#download-product-config
-# 2. For OpsMan, we must not set `stemcell-iaas` while all others must set it with the right value
-# 3. The options available for `stemcell-iaas`: vsphere; vcloud; openstack; google; azure; aws
+# 2. For OpsMan, we must not set `stemcell-iaas`
+# 3. For products, there are two options:
+#    - If one simply sets `stemcell-iaas: <iaas>`, it would retrieve the latest version of stemcell among the applicable range
+#    - If one desires a full control on which stemcell you want to use, specify the `<PRODUCT_ALIAS>-stemcell` session
+# 4. The options available for `stemcell-iaas`: vsphere; vcloud; openstack; google; azure; aws
+#
 
 products:
 
   # ==== Ops Manager
   opsman:
-    product-version: "2.4.9"
+    product-version: "2.6.9"
     pivnet-product-slug: ops-manager
     pivnet-api-token: ((pivnet_token))
-    pivnet-file-glob: "*GCP.yml"
+    pivnet-file-glob: "ops-manager-vsphere-*.ova"
 
   # ==== Products
 
   # PKS
   pks:
-    product-version: "1.3.5"
+    product-version: "1.4.2"
     pivnet-product-slug: pivotal-container-service
     pivnet-api-token: ((pivnet_token))
     pivnet-file-glob: "*.pivotal"
-    stemcell-iaas: google
+    stemcell-iaas: vsphere                       # 1) uncomment it if one desires the latest applicable stemcell for the product, or
+  #pks-stemcell:                                 # 2) use this session to specify exact stemcell you want
+  #  product-version: "250.73"                   # applicable stemcell range: 250.73
+  #  pivnet-product-slug: stemcells-ubuntu-xenial
+  #  pivnet-api-token: ((pivnet_token))
+  #  pivnet-file-glob: "bosh-stemcell-*-vsphere-esxi-ubuntu-xenial-go_agent.tgz"
 
   # Harbor
   harbor:
-    product-version: "1.6.3"
+    product-version: "1.8.3"
     pivnet-product-slug: harbor-container-registry
     pivnet-api-token: ((pivnet_token))
     pivnet-file-glob: "*.pivotal"
-    stemcell-iaas: google
+    stemcell-iaas: vsphere                       # 1) uncomment it if one desires the latest applicable stemcell for the product, or
+  #harbor-stemcell:                              # 2) use this session to specify exact stemcell you want
+  #  product-version: "250.73"                   # applicable stemcell range: 250.*
+  #  pivnet-product-slug: stemcells-ubuntu-xenial
+  #  pivnet-api-token: ((pivnet_token))
+  #  pivnet-file-glob: "bosh-stemcell-*-vsphere-esxi-ubuntu-xenial-go_agent.tgz"

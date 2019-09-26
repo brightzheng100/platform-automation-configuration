@@ -100,3 +100,50 @@ Check it out and share your feedback!
 **3. Added a `global.yaml` config file under `<FOUNDATION_CODE>/config/`**
 
 Sometimes we need some more global configs, especially for those require CredHub interpolation, e.g. `pivnet_token`. This is the right place to host them.
+
+**4. Added control on Stemcell version in `<FOUNDATION_CODE>/products.yml`**
+
+As mentioned in [`Stemcell Assignment`](https://github.com/brightzheng100/platform-automation-pipelines#stemcell-assignment), sometimes there is a need to align the same products' versions, including the Stemcell version to any specific product, to fully gain the consistency across different foundations.
+
+In this case, we can specify Stemcell info for all products.
+
+From:
+
+```
+products:
+  ...
+  pks:
+    product-version: "1.4.2"
+    pivnet-product-slug: pivotal-container-service
+    pivnet-api-token: ((pivnet_token))
+    pivnet-file-glob: "*.pivotal"
+    stemcell-iaas: vsphere
+```
+
+To:
+
+```
+products:
+  ...
+  pks:
+    product-version: "1.4.2"
+    pivnet-product-slug: pivotal-container-service
+    pivnet-api-token: ((pivnet_token))
+    pivnet-file-glob: "*.pivotal"
+    #stemcell-iaas: vsphere
+  pks-stemcell:
+    product-version: "250.73"
+    pivnet-product-slug: stemcells-ubuntu-xenial
+    pivnet-api-token: ((pivnet_token))
+    pivnet-file-glob: "bosh-stemcell-*-vsphere-esxi-ubuntu-xenial-go_agent.tgz"
+```
+
+And also make sure to (re-)fly the `install-upgrade-products` and `patch-products` pipelines with the option of `-s true`.
+
+For example:
+
+```
+$ ./3-fly-install-upgrade-products.sh -t dev -p dev -n install-upgrade-products -s true
+
+$ ./4-fly-patch-products.sh -t dev -p dev -n patch-products -s true
+```
